@@ -33,7 +33,8 @@ public class ReplyService {
             return false;
         }
 
-        replyRepository.deleteById(replyId);
+        reply.setDeleted(true);
+        replyRepository.save(reply);
         return true;
     }
 

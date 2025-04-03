@@ -20,6 +20,9 @@ public class Reply {
     @JoinColumn(name = "article_id")
     private Article article;
 
+    @Column(nullable = false)
+    private boolean deleted = false;
+
     public Long getId() {
         return id;
     }
@@ -50,5 +53,13 @@ public class Reply {
 
     public void setArticle(Article article) {
         this.article = article;
+    }
+
+    public boolean isDeleted() {
+        return deleted;
+    }
+
+    public void setDeleted(boolean deleted) {
+        this.deleted = deleted;
     }
 }
