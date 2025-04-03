@@ -39,6 +39,6 @@ public class ReplyService {
     }
 
     public boolean checkDeletableArticle(Long articleId, Long userId) {
-        return replyRepository.existsNotDeletedOtherUserReplyByArticleId(articleId, userId);
+        return replyRepository.existsByArticleIdAndUserIdNotAndDeletedFalse(articleId, userId);
     }
 }
