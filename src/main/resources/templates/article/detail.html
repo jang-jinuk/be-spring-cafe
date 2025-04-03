@@ -36,24 +36,30 @@
             <h2 class="text-lg font-bold mb-4">댓글</h2>
             <form th:action="@{/article/{articleId}/reply(articleId=${article.id})}" method="post" class="mt-4">
                 <div class="flex flex-row items-center space-x-2">
-                   <textarea name="content" class="w-full border border-gray-300 rounded-lg p-2 resize-none"
-                             placeholder="댓글을 입력하세요." required></textarea>
+            <textarea name="content" class="w-full border border-gray-300 rounded-lg p-2 resize-none"
+                      placeholder="댓글을 입력하세요." required></textarea>
                     <button type="submit" class="btn btn-primary text-sm">댓글작성</button>
                 </div>
             </form>
             <div class="comment-list">
-                <div th:each="reply : ${replies}" class="comment border-b border-gray-300 py-2">
-                    <p class="text-sm font-semibold" th:text="${reply.user.name}">사용자 이름</p>
-                    <p class="text-gray-700" th:text="${reply.content}">댓글 내용</p>
+                <div th:each="reply : ${replies}" class="comment border-b border-gray-300 py-2 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm font-semibold" th:text="${reply.user.name}">사용자 이름</p>
+                        <p class="text-gray-700" th:text="${reply.content}">댓글 내용</p>
+                    </div>
+                    <div th:if="${session.loginUser.id == reply.user.id}">
+                        <form th:action="@{/article/{articleId}/reply/{replyId}/delete(articleId=${article.id}, replyId=${reply.id})}"
+                              method="post">
+                            <input type="hidden" name="_method" value="DELETE"/>
+                            <button type="submit" class="text-lg">🗑️</button>
+                        </form>
+                    </div>
                 </div>
             </div>
-
-        </div>
-
-        <div class="text-center mt-4">
-            <a th:href="@{/}" class="btn btn-secondary">목록으로</a>
-        </div>
-    </div>
+            <div class="text-center mt-4">
+                <a th:href="@{/}" class="btn btn-secondary">목록으로</a>
+            </div>
+      </div>
 </main>
 </body>
 </html>
