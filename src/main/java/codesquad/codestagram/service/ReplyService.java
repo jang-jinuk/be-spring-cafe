@@ -1,5 +1,6 @@
 package codesquad.codestagram.service;
 
+import codesquad.codestagram.domain.Reply;
 import codesquad.codestagram.repository.ReplyRepository;
 import org.springframework.stereotype.Service;
 
@@ -12,4 +13,7 @@ public class ReplyService {
         this.replyRepository = replyRepository;
     }
 
+    public void saveReply(Reply reply) {
+        replyRepository.save(reply);
+    }
 }
