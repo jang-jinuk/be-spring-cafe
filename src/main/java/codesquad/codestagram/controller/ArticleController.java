@@ -128,4 +128,27 @@ public class ArticleController {
 
         return "redirect:/article/" + articleId;
     }
+
+    @DeleteMapping("/article/{articleId}/reply/{replyId}/delete")
+    public String deleteReply(@PathVariable("articleId") Long articleId, @PathVariable("replyId") Long replyId
+            , HttpSession session, RedirectAttributes redirectAttributes) {
+
+        User loginUser = (User) session.getAttribute(LOGIN_USER);
+
+        try {
+            boolean result = replyService.removeReply(replyId, loginUser);
+
+            if (!result) {
+                redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "작성자 ID와 사용자 ID가 일치하지 않습니다.");
+                return "redirect:/article/" + articleId;
+            }
+
+            redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "댓글이 삭제되었습니다.");
+            return "redirect:/article/" + articleId;
+
+        } catch (EntityNotFoundException e) {
+            redirectAttributes.addFlashAttribute(ALERT_MESSAGE, e.getMessage());
+            return "redirect:/";
+        }
+    }
 }
