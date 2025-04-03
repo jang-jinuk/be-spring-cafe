@@ -10,7 +10,7 @@ import java.util.List;
 
 @Repository
 public interface ReplyRepository extends JpaRepository<Reply, Long> {
-    List<Reply> findAllByArticle_Id(Long articleId);
+    List<Reply> findAllByArticle_IdAndDeleted(Long articleId, boolean deleted);
     @Query("SELECT COUNT(r) > 0 FROM Reply r WHERE r.article.id = :articleId AND r.user.id != :userId")
     boolean existsOtherUserReplyByArticleId(@Param("articleId") Long articleId, @Param("userId") Long userId);
 }
