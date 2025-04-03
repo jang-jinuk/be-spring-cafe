@@ -107,15 +107,20 @@ public class ArticleController {
     public String deleteArticle(@PathVariable("id") Long id, HttpSession session, RedirectAttributes redirectAttributes) {
         User loginUser = (User) session.getAttribute(LOGIN_USER);
 
-        boolean result = articleService.removeArticle(id, loginUser);
+        if (!replyService.checkDeletableArticle(id, loginUser.getId())) {
+            boolean result = articleService.removeArticle(id, loginUser);
 
-        if (!result) {
-            redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "작성자 ID와 사용자 ID가 일치하지 않습니다.");
-            return "redirect:/article/" + id;
+            if (!result) {
+                redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "작성자 ID와 사용자 ID가 일치하지 않습니다.");
+                return "redirect:/article/" + id;
+            }
+
+            redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "게시글이 정상적으로 삭제되었습니다.");
+            return "redirect:/";
         }
 
-        redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "게시글이 정상적으로 삭제되었습니다.");
-        return "redirect:/";
+        redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "댓글이 없는 경우만 삭제 가능합니다.");
+        return "redirect:/article/" + id;
     }
 
     @PostMapping("/article/{articleId}/reply")
