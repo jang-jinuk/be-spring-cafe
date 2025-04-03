@@ -4,6 +4,8 @@ import codesquad.codestagram.domain.Reply;
 import codesquad.codestagram.repository.ReplyRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ReplyService {
 
@@ -15,5 +17,9 @@ public class ReplyService {
 
     public void saveReply(Reply reply) {
         replyRepository.save(reply);
+    }
+
+    public List<Reply> findReplyList(Long articleId) {
+        return replyRepository.findAllByArticle_Id(articleId);
     }
 }
