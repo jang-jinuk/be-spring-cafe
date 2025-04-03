@@ -119,7 +119,7 @@ public class ArticleController {
             return "redirect:/";
         }
 
-        redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "댓글이 없는 경우만 삭제 가능합니다.");
+        redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "다른 사용자의 댓글이 없는 경우에만 삭제 가능합니다.");
         return "redirect:/article/" + id;
     }
 
