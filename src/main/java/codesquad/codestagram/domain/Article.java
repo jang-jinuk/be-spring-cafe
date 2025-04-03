@@ -3,7 +3,7 @@ package codesquad.codestagram.domain;
 import jakarta.persistence.*;
 
 @Entity
-public class Article {
+public class Article extends BaseEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
