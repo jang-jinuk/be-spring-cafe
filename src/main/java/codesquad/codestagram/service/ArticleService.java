@@ -43,12 +43,14 @@ public class ArticleService {
     }
 
     public boolean removeArticle(Long id, User loginUser) {
-        Article findArticle = findArticle(id);
+        Article article = findArticle(id);
 
-        if (loginUser.getId() != findArticle.getUser().getId()) {
+        if (loginUser.getId() != article.getUser().getId()) {
             return false;
         }
-        articleRepository.deleteById(id);
+
+        article.setDeleted(true);
+        articleRepository.save(article);
         return true;
     }
 }
