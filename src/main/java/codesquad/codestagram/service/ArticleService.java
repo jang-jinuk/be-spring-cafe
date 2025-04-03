@@ -18,7 +18,7 @@ public class ArticleService {
     }
 
     public List<Article> findArticleList() {
-        return articleRepository.findAll();
+        return articleRepository.findAllByDeleted(false);
     }
 
     public void saveArticle(Article article) {
