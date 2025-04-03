@@ -52,7 +52,9 @@ public class ArticleController {
 
         try {
             Article article = articleService.findArticle(id);
+            List<Reply> replies = replyService.findReplyList(id);
             model.addAttribute("article", article);
+            model.addAttribute("replies", replies);
             return "article/detail";
 
         } catch (EntityNotFoundException e) {
