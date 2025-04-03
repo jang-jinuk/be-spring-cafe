@@ -1,8 +1,10 @@
 package codesquad.codestagram.controller;
 
 import codesquad.codestagram.domain.Article;
+import codesquad.codestagram.domain.Reply;
 import codesquad.codestagram.domain.User;
 import codesquad.codestagram.service.ArticleService;
+import codesquad.codestagram.service.ReplyService;
 import jakarta.persistence.EntityNotFoundException;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -18,9 +20,11 @@ import static codesquad.codestagram.config.AppConstants.*;
 public class ArticleController {
 
     private final ArticleService articleService;
+    private final ReplyService replyService;
 
-    public ArticleController(ArticleService articleService) {
+    public ArticleController(ArticleService articleService, ReplyService replyService) {
         this.articleService = articleService;
+        this.replyService = replyService;
     }
 
     @GetMapping("/")
@@ -110,5 +114,16 @@ public class ArticleController {
 
         redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "게시글이 정상적으로 삭제되었습니다.");
         return "redirect:/";
+    }
+
+    @PostMapping("/article/{articleId}/reply")
+    public String createReply(@PathVariable("articleId") Long articleId, @ModelAttribute Reply reply, HttpSession session) {
+        User loginUser = (User) session.getAttribute(LOGIN_USER);
+
+        reply.setUser(loginUser);
+        reply.setArticle(articleService.findArticle(articleId));
+        replyService.saveReply(reply);
+
+        return "redirect:/article/" + articleId;
     }
 }
