@@ -5,6 +5,7 @@ import codesquad.codestagram.domain.User;
 import codesquad.codestagram.repository.ReplyRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -40,5 +41,13 @@ public class ReplyService {
 
     public boolean checkDeletableArticle(Long articleId, Long userId) {
         return replyRepository.existsByArticleIdAndUserIdNotAndDeletedFalse(articleId, userId);
+    }
+
+    @Transactional
+    public void removeAllReplyByArticle(Long articleId) {
+        List<Reply> replies = replyRepository.findAllByArticleIdAndDeletedFalse(articleId);
+        for (Reply reply : replies) {
+            reply.setDeleted(true);
+        }
     }
 }

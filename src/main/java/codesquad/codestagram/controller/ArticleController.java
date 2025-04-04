@@ -109,6 +109,7 @@ public class ArticleController {
 
         if (!replyService.checkDeletableArticle(id, loginUser.getId())) {
             boolean result = articleService.removeArticle(id, loginUser);
+            replyService.removeAllReplyByArticle(id);
 
             if (!result) {
                 redirectAttributes.addFlashAttribute(ALERT_MESSAGE, "작성자 ID와 사용자 ID가 일치하지 않습니다.");
