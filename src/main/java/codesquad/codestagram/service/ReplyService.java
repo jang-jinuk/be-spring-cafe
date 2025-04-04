@@ -22,7 +22,7 @@ public class ReplyService {
     }
 
     public List<Reply> findReplyList(Long articleId) {
-        return replyRepository.findAllByArticle_IdAndDeleted(articleId, false);
+        return replyRepository.findAllByArticleIdAndDeletedFalse(articleId);
     }
 
     public boolean removeReply(Long replyId, User loginUser) {
