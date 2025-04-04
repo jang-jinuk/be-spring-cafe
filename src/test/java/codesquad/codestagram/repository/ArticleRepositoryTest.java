@@ -12,6 +12,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
 
 @SpringBootTest
+@Transactional
 public class ArticleRepositoryTest {
 
     private final ArticleRepository articleRepository;
