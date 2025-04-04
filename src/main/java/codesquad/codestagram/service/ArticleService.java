@@ -21,8 +21,8 @@ public class ArticleService {
         return articleRepository.findAllByDeleted(false);
     }
 
-    public void saveArticle(Article article) {
-        articleRepository.save(article);
+    public Article saveArticle(Article article) {
+        return articleRepository.save(article);
     }
 
     public Article findArticle(Long id) {

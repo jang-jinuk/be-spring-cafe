@@ -43,8 +43,8 @@ public class ArticleController {
     public String createArticle(@ModelAttribute Article article, HttpSession session) {
         User loginUser = (User) session.getAttribute(LOGIN_USER);
         article.setUser(loginUser);
-        articleService.saveArticle(article);
-        return "redirect:/";
+        Article savedArticle = articleService.saveArticle(article);
+        return "redirect:/article/" + savedArticle.getId();
     }
 
     @GetMapping("/article/{id}")
