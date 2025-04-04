@@ -10,10 +10,12 @@
         <div class="post-header">
             <h1 class="post-title" th:text="${article.title}">게시글 제목</h1>
             <div class="post-meta">
-                <span>작성일</span>
-                <span>•</span>
                 <span>
                     <p th:text="${article.user.name}"></p>
+                </span>
+                    <span>•</span>
+                <span>
+                      <p th:text="${#temporals.format(article.updatedAt, 'yyyy-MM-dd HH:mm')}"></p>
                 </span>
             </div>
         </div>
@@ -46,6 +48,7 @@
                     <div>
                         <p class="text-sm font-semibold" th:text="${reply.user.name}">사용자 이름</p>
                         <p class="text-gray-700" th:text="${reply.content}">댓글 내용</p>
+                        <p class="text-xs text-gray-500" th:text="${#temporals.format(reply.createdAt, 'yyyy-MM-dd HH:mm')}">작성 시간</p>
                     </div>
                     <div th:if="${session.loginUser.id == reply.user.id}">
                         <form th:action="@{/article/{articleId}/reply/{replyId}/delete(articleId=${article.id}, replyId=${reply.id})}"
